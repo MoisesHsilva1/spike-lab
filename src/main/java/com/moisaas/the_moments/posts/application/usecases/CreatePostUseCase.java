@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-
 @Service
 @RequiredArgsConstructor
 public class CreatePostUseCase {
@@ -21,11 +19,11 @@ public class CreatePostUseCase {
     private final FileStorageService fileStorageService;
 
     @Transactional
-    public PostDto execute(CreatePostDto post, MultipartFile image) throws IOException {
+    public PostDto execute(CreatePostDto post, MultipartFile image)  {
         String imageKey = fileStorageService.uploadFile(image);
+
         PostEntity entity = postMapper.toEntity(post, imageKey);
-        PostEntity saved = postsRepository.save(entity);
-        PostDto response = postMapper.toDto(saved);
+        PostDto response = postMapper.toDto(postsRepository.save(entity));
 
         response.setImageUrl(fileStorageService.getPresignedUrl(imageKey));
 

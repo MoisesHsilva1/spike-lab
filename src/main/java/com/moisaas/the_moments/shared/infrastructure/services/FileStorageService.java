@@ -1,5 +1,8 @@
 package com.moisaas.the_moments.shared.infrastructure.services;
 
+import java.io.IOException;
+import java.time.Duration;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -10,9 +13,6 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 
-import java.io.IOException;
-import java.time.Duration;
-
 @Service
 @RequiredArgsConstructor
 public class FileStorageService {
@@ -22,16 +22,20 @@ public class FileStorageService {
     @Value("${aws.bucket.name}")
     private String bucketName;
 
-    public String uploadFile(MultipartFile file) throws IOException {
+    public String uploadFile(MultipartFile file)  {
         String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
 
-        s3Client.putObject(PutObjectRequest.builder()
-                        .bucket(bucketName)
-                        .key(fileName)
-                        .build(),
-                RequestBody.fromBytes(file.getBytes()));
+        try {
+            s3Client.putObject(PutObjectRequest.builder()
+                            .bucket(bucketName)
+                            .key(fileName)
+                            .build(),
+                    RequestBody.fromBytes(file.getBytes()));
 
-        return fileName;
+            return fileName;
+        } catch(IOException error) {
+            throw new IllegalArgumentException("Fail upload file", error);
+        }
     }
 
     public String getPresignedUrl(String fileName) {
@@ -39,6 +43,7 @@ public class FileStorageService {
                 .signatureDuration(Duration.ofMinutes(10))
                 .getObjectRequest(builder -> builder.bucket(bucketName).key(fileName))
                 .build();
+
         return s3Presigner.presignGetObject(presignRequest).url().toString();
     }
 }

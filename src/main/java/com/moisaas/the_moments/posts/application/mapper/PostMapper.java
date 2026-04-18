@@ -1,17 +1,23 @@
 package com.moisaas.the_moments.posts.application.mapper;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
 import com.moisaas.the_moments.posts.application.dtos.CreatePostDto;
 import com.moisaas.the_moments.posts.application.dtos.PostDto;
 import com.moisaas.the_moments.posts.domain.entities.PostEntity;
+import com.moisaas.the_moments.shared.infrastructure.services.FileStorageService;
 import com.moisaas.the_moments.tags.application.dtos.TagDto;
 import com.moisaas.the_moments.tags.domain.entities.TagEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.List;
-
 @Component
+@RequiredArgsConstructor
 public class PostMapper {
+    private final FileStorageService fileStorageService;
+
     public PostEntity toEntity(CreatePostDto dto, String imageUrl) {
         PostEntity entity = new PostEntity();
 
@@ -25,11 +31,16 @@ public class PostMapper {
     }
 
     public PostDto toDto(PostEntity entity) {
+        String imageUrl = Optional.ofNullable(entity.getImageUrl())
+                .filter(key -> !key.isBlank())
+                .map(fileStorageService::getPresignedUrl)
+                .orElse(null);
+
         return PostDto.builder()
                 .id(entity.getId())
                 .title(entity.getTitle())
                 .body(entity.getBody())
-                .imageUrl(entity.getImageUrl())
+                .imageUrl(imageUrl)
                 .stars(entity.getStars())
                 .tags(toTagDtos(entity.getTags()))
                 .createdAt(entity.getCreatedAt())

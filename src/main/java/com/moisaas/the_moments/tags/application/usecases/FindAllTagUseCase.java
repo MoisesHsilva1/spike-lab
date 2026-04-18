@@ -11,16 +11,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-
 @Service
 @RequiredArgsConstructor
 public class FindAllTagUseCase {
     private final TagRepository repository;
     private final TagMapper tagMapper;
 
-    public Page<TagDto> execute(FindAllTagDto params) throws IOException {
-
+    public Page<TagDto> execute(FindAllTagDto params) {
         Pageable pageable = PageRequest.of(
                 params.getOffset(),
                 params.getLimit()
