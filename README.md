@@ -109,7 +109,7 @@ Deploy AWS - falta
 - [x] Listar tags com paginação
 - [x] Implementar SDK AWS
 - [x] Implementar integração com S3 (upload de imagens)
-- [ ] Implementar swagger na API
+- [x] Implementar springdoc-openapi na API
 - [x] Criar testes unitários
 - [ ] Integrar SDK de autenticação (Firebase ou AWS)
 - [ ] Implementar módulo de autenticação
