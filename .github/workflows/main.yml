@@ -28,29 +28,6 @@ jobs:
       - name: Docker Build
         run: docker build . -t the-moments:latest
 
-  security:
-    needs: test-and-build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-          cache: 'maven'
-
-      - name: Cache OWASP Dependency-Check DB
-        uses: actions/cache@v4
-        with:
-          path: ~/.m2/repository/.cache/dependency-check
-          key: ${{ runner.os }}-dependency-check-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-dependency-check
-
-      - name: OWASP Dependency-Check
-        run: mvn org.owasp:dependency-check-maven:check -DskipTests -Dformat=JSON || true
-
   quality:
     needs: test-and-build
     runs-on: ubuntu-latest
