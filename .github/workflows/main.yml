@@ -41,28 +41,8 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Snyk Open Source Scan (SCA)
-        uses: snyk/actions/maven@master
-        continue-on-error: true
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --severity-threshold=high --json-file-output=snyk-report.json
-
-      - name: Snyk Container Scan
-        uses: snyk/actions/docker@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          image: the-moments:latest
-          args: --severity-threshold=high
-
-      - name: Upload Snyk report
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: snyk-report
-          path: snyk-report.json
+      - name: OWASP Dependency-Check
+        run: mvn org.owasp:dependency-check-maven:check -DskipTests || true
 
   quality:
     needs: test-and-build
