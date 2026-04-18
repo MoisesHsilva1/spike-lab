@@ -77,11 +77,6 @@ A aplicação segue uma arquitetura baseada em serviços da AWS:
 - **RDS (PostgreSQL)** → persistência de dados
 - **S3** → armazenamento de imagens
 
-### Segurança
-
-- EC2 e RDS estão em **subnets privadas**
-- Apenas o Load Balancer é exposto publicamente
-- O banco de dados é acessível somente pela aplicação (via security groups)
 
 ---
 
