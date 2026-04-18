@@ -6,8 +6,6 @@ para descrever o contexto do momento (ex: `barato`, `instagramável`, `fim de m�
 A proposta é oferecer uma forma mais flexível e expressiva de avaliação, indo além de sistemas tradicionais baseados
 apenas em notas.
 
-> Este projeto é open source e tem como objetivo principal aprendizado em arquitetura de software, Java e cloud (AWS).
-
 ---
 
 ## Arquitetura
@@ -65,16 +63,16 @@ User  → Controller → DTO → Use Case → Domain → Repository  → Banco
 
 ### Diagrama conceitual da clean architecture
 
-<img width="2157" height="1344" alt="image" src="https://github.com/user-attachments/assets/27d30a0e-5e54-40e1-b9aa-23452df80332" />
+<img width="2157" height="1344" alt="image" src="https://github.com/user-attachments/assets/b7fba6b7-5ba9-4646-98e9-3fc8d8b1f3b8" />
+
+
 
 ---
 
 ## Arquitetura em Cloud (AWS)
 
-A aplicação segue uma arquitetura baseada em serviços da AWS, com foco em escalabilidade e segurança:
+A aplicação segue uma arquitetura baseada em serviços da AWS:
 
-- **Route 53** → resolução de domínio
-- **Application Load Balancer (ALB)** → ponto de entrada da aplicação
 - **EC2** → execução da API (container Docker)
 - **RDS (PostgreSQL)** → persistência de dados
 - **S3** → armazenamento de imagens
@@ -87,13 +85,7 @@ A aplicação segue uma arquitetura baseada em serviços da AWS, com foco em esc
 
 ---
 
-## Fluxo da aplicação
-
-<img width="751" height="641" alt="the-moments-diagram drawio" src="https://github.com/user-attachments/assets/4c9d95aa-59dd-49c0-8d70-446818e58c60" />
-
----
-
-## Pipeline de Deploy (planejado)
+## Pipeline de Deploy 
 
 ```
 Build - ok
@@ -109,7 +101,7 @@ Deploy AWS - falta
 
 ---
 
-## Checklist de tarefas | Fase atual do projeto (MVP)
+## Checklist de tarefas 
 
 ### Core
 
@@ -135,10 +127,8 @@ Deploy AWS - falta
 
 - [x] Configurar S3
 - [x] Configurar Route 53
-- [ ] Configurar Load Balancer
 - [ ] Configurar RDS
 - [ ] Configurar EC2
-- [ ] Configurar subnets (pública e privada)
 - [ ] Configurar CloudWatch + Grafana
 - [ ] Criar dashboards de observabilidade
 - [ ] Configurar alertas
@@ -152,7 +142,7 @@ Deploy AWS - falta
 
 - Docker
 - Docker Compose (Rodar banco local)
-- Java 17+
+- Java 21+
 
 ### Rodando banco localmente
 
@@ -175,45 +165,7 @@ docker-compose down -v
 A aplicação estará disponível em:
 
 ```
-http://localhost:3000
+http://localhost:8080
 ```
 
 ---
-
-## Contribuição
-
-Contribuições são bem-vindas! Este projeto também tem foco educacional.
-
-Para contribuir:
-
-1. Faça um fork do projeto
-2. Crie uma branch:
-
-```bash
-git checkout -b feature/sua-feature
-```
-
-3. Commit suas alterações:
-
-```bash
-git commit -m "feat: minha contribuição"
-```
-
-4. Push para o repositório:
-
-```bash
-git push origin feature/sua-feature
-```
-
-5. Abra um Pull Request para branch develop
-
----
-
-## Objetivo de aprendizado
-
-Este projeto foi criado com foco em:
-
-- Evoluir habilidades em **Java (Spring Boot)**
-- Aplicar boas práticas de arquitetura (Clean Architecture)
-- Trabalhar com **cloud (AWS)**
-- Praticar organização de código e documentação
