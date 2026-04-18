@@ -126,7 +126,6 @@ Deploy AWS - falta
 - [ ] Configurar EC2
 - [ ] Configurar CloudWatch + Grafana
 - [ ] Criar dashboards de observabilidade
-- [ ] Configurar alertas
 - [ ] Implementar CI/CD (build, testes, segurança, deploy)
 
 ---
