@@ -56,7 +56,7 @@ desenvolvimento, sem perder organização e separação de responsabilidades.
 ### Fluxo simplificado
 
 ```
-User  → Controller → DTO → Use Case → Domain → Repository  → Banco
+User  → Controller → DTO → Use Case  → Repository → Entity → Banco
 ```
 
 ---
