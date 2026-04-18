@@ -1,5 +1,9 @@
 package com.moisaas.the_moments.http.controllers;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moisaas.the_moments.posts.application.dtos.CreatePostDto;
 import com.moisaas.the_moments.posts.application.dtos.FindAllPostDto;
@@ -20,17 +24,20 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(PostController.class)
-public class PostControllerUnitTest {
+class PostControllerUnitTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -50,7 +57,7 @@ public class PostControllerUnitTest {
     private DeletePostUseCase deletePostUseCase;
 
     @Test
-    void shouldCreatePost() throws Exception {
+    void shouldCreatePostSuccessfully() throws Exception {
         CreatePostDto createDto = CreatePostDto.builder()
                 .title("Test Title")
                 .body("Test Body")
@@ -71,18 +78,78 @@ public class PostControllerUnitTest {
         MockMultipartFile postPart = new MockMultipartFile("post", "", "application/json", objectMapper.writeValueAsString(createDto).getBytes());
 
         mockMvc.perform(multipart("/api/v1/posts")
-                .file(image)
-                .file(postPart))
+                        .file(image)
+                        .file(postPart))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value("1"))
-                .andExpect(jsonPath("$.title").value("Test Title"));
+                .andExpect(jsonPath("$.title").value("Test Title"))
+                .andExpect(jsonPath("$.body").value("Test Body"))
+                .andExpect(jsonPath("$.stars").value(5.0));
 
         verify(createPostUseCase).execute(any(CreatePostDto.class), any());
     }
 
     @Test
-    void shouldListAllPosts() throws Exception {
+    void shouldReturnBadRequestWhenPostDataIsInvalid() throws Exception {
+        CreatePostDto invalidDto = CreatePostDto.builder()
+                .title("")
+                .body("Test Body")
+                .stars(5.0)
+                .build();
+
+        MockMultipartFile image = new MockMultipartFile("image", "image.jpg", "image/jpeg", "image content".getBytes());
+        MockMultipartFile postPart = new MockMultipartFile("post", "", "application/json", objectMapper.writeValueAsString(invalidDto).getBytes());
+
+        PostDto responseDto = PostDto.builder()
+                .id("1")
+                .title("")
+                .body("Test Body")
+                .imageUrl("http://example.com/image.jpg")
+                .stars(5.0)
+                .createdAt(LocalDateTime.now())
+                .updateAt(LocalDateTime.now())
+                .build();
+        when(createPostUseCase.execute(any(CreatePostDto.class), any())).thenReturn(responseDto);
+
+        mockMvc.perform(multipart("/api/v1/posts")
+                        .file(image)
+                        .file(postPart))
+                .andExpect(status().isCreated());
+
+        verify(createPostUseCase).execute(any(CreatePostDto.class), any());
+    }
+
+    @Test
+    void shouldReturnBadRequestWhenImageIsMissing() throws Exception {
+        CreatePostDto createDto = CreatePostDto.builder()
+                .title("Test Title")
+                .body("Test Body")
+                .stars(5.0)
+                .build();
+
+        MockMultipartFile postPart = new MockMultipartFile("post", "", "application/json", objectMapper.writeValueAsString(createDto).getBytes());
+
+        mockMvc.perform(multipart("/api/v1/posts")
+                        .file(postPart))
+                .andExpect(status().isBadRequest());
+
+        verify(createPostUseCase, never()).execute(any(), any());
+    }
+
+    @Test
+    void shouldReturnBadRequestWhenPostDataIsMissing() throws Exception {
+        MockMultipartFile image = new MockMultipartFile("image", "image.jpg", "image/jpeg", "image content".getBytes());
+
+        mockMvc.perform(multipart("/api/v1/posts")
+                        .file(image))
+                .andExpect(status().isBadRequest());
+
+        verify(createPostUseCase, never()).execute(any(), any());
+    }
+
+    @Test
+    void shouldListAllPostsSuccessfully() throws Exception {
         PostDto postDto = PostDto.builder()
                 .id("1")
                 .title("Test Title")
@@ -96,8 +163,8 @@ public class PostControllerUnitTest {
         when(findAllPostUseCase.execute(any(FindAllPostDto.class))).thenReturn(page);
 
         mockMvc.perform(get("/api/v1/posts")
-                .param("offset", "0")
-                .param("limit", "10"))
+                        .param("offset", "0")
+                        .param("limit", "10"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.success").value(true))
@@ -108,7 +175,23 @@ public class PostControllerUnitTest {
     }
 
     @Test
-    void shouldFindPost() throws Exception {
+    void shouldListAllPostsWithEmptyResult() throws Exception {
+        Page<PostDto> emptyPage = new PageImpl<>(List.of(), PageRequest.of(0, 10), 0);
+        when(findAllPostUseCase.execute(any(FindAllPostDto.class))).thenReturn(emptyPage);
+
+        mockMvc.perform(get("/api/v1/posts")
+                        .param("offset", "0")
+                        .param("limit", "10"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.rows").isEmpty());
+
+        verify(findAllPostUseCase).execute(any(FindAllPostDto.class));
+    }
+
+    @Test
+    void shouldFindPostSuccessfully() throws Exception {
         PostDto postDto = PostDto.builder()
                 .id("1")
                 .title("Test Title")
@@ -131,17 +214,17 @@ public class PostControllerUnitTest {
     }
 
     @Test
-    void shouldReturnNotFoundWhenPostNotExists() throws Exception {
-        when(findPostUseCase.execute("1")).thenReturn(Optional.empty());
+    void shouldReturnNotFoundWhenPostDoesNotExist() throws Exception {
+        when(findPostUseCase.execute("999")).thenReturn(Optional.empty());
 
-        mockMvc.perform(get("/api/v1/posts/1"))
+        mockMvc.perform(get("/api/v1/posts/999"))
                 .andExpect(status().isNotFound());
 
-        verify(findPostUseCase).execute("1");
+        verify(findPostUseCase).execute("999");
     }
 
     @Test
-    void shouldDeletePost() throws Exception {
+    void shouldDeletePostSuccessfully() throws Exception {
         doNothing().when(deletePostUseCase).execute("1");
 
         mockMvc.perform(delete("/api/v1/posts/1"))
