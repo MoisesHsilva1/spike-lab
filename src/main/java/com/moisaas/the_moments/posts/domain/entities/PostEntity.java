@@ -4,6 +4,7 @@ import com.moisaas.the_moments.tags.domain.entities.TagEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class PostEntity {
     )
     private List<TagEntity> tags = new ArrayList<>();
 
+    @CreatedDate
     private LocalDateTime createdAt;
 
     @PrePersist
