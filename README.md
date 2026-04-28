@@ -1,4 +1,4 @@
-# The Moments
+# The Moments (Desenvolvimento)
 
 O **The moments** é uma aplicação para registrar e compartilhar experiências gastronômicas utilizando **tags dinâmicas**
 para descrever o contexto do momento (ex: `barato`, `instagramável`, `fim de mês`).
@@ -7,6 +7,12 @@ A proposta é oferecer uma forma mais flexível e expressiva de avaliação, ind
 apenas em notas.
 
 ---
+
+## Modelagem do Banco 
+
+
+<img width="760" height="454" alt="The-moments" src="https://github.com/user-attachments/assets/25428e96-7d5e-4817-8222-fe296e3face1" />
+
 
 ## Arquitetura
 
@@ -69,13 +75,13 @@ User  → Controller → DTO → Use Case  → Repository → Entity → Banco
 
 ---
 
-## Arquitetura em Cloud (AWS)
+## Arquitetura em Cloud (AWS) - em desenvolvimento
 
 A aplicação segue uma arquitetura baseada em serviços da AWS:
 
-- **EC2** → execução da API (container Docker)
-- **RDS (PostgreSQL)** → persistência de dados
-- **S3** → armazenamento de imagens
+- **EC2** → execução da API (container Docker) -  falta
+- **RDS (PostgreSQL)** → persistência de dados - falta
+- **S3** → armazenamento de imagens -  ok
 
 
 ---
@@ -111,7 +117,6 @@ Deploy AWS - falta
 - [x] Implementar integração com S3 (upload de imagens)
 - [x] Implementar springdoc-openapi na API
 - [x] Criar testes unitários
-- [ ] Integrar SDK de autenticação (Firebase ou AWS)
 - [ ] Implementar módulo de autenticação
 - [ ] Implementar módulo de usuário
 - [ ] Proteger rotas com token
@@ -124,9 +129,7 @@ Deploy AWS - falta
 - [x] Configurar Route 53
 - [ ] Configurar RDS
 - [ ] Configurar EC2
-- [ ] Configurar CloudWatch + Grafana
-- [ ] Criar dashboards de observabilidade
-- [ ] Implementar CI/CD (build, testes, segurança, deploy)
+- [x] Implementar CI/CD (build, testes, segurança, deploy)
 
 ---
 
