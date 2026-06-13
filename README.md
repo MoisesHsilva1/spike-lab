@@ -1,18 +1,10 @@
 # The Moments (Desenvolvimento)
 
-O **The moments** é uma aplicação para registrar e compartilhar experiências gastronômicas utilizando **tags dinâmicas**
-para descrever o contexto do momento (ex: `barato`, `instagramável`, `fim de mês`).
+# (v0)
 
-A proposta é oferecer uma forma mais flexível e expressiva de avaliação, indo além de sistemas tradicionais baseados
-apenas em notas.
+> **O The Moments é o ponto de partida para uma rede social focada em autonomia e personalização, mas que nesta v0 conecta apenas o essencial: um espaço 100% anônimo para quem quer compartilhar sentimentos, frases e poesias sem medo de se identificar, e para quem quer apenas ler pensamentos autênticos.**
 
 ---
-
-## Modelagem do Banco 
-
-
-<img width="760" height="454" alt="The-moments" src="https://github.com/user-attachments/assets/25428e96-7d5e-4817-8222-fe296e3face1" />
-
 
 ## Arquitetura
 
@@ -75,17 +67,6 @@ User  → Controller → DTO → Use Case  → Repository → Entity → Banco
 
 ---
 
-## Arquitetura em Cloud (AWS) - em desenvolvimento
-
-A aplicação segue uma arquitetura baseada em serviços da AWS:
-
-- **EC2** → execução da API (container Docker) -  falta
-- **RDS (PostgreSQL)** → persistência de dados - falta
-- **S3** → armazenamento de imagens -  ok
-
-
----
-
 ## Pipeline de Deploy 
 
 ```
@@ -99,37 +80,6 @@ Code Security - ok
   ↓
 Deploy AWS - falta
 ```
-
----
-
-## Checklist de tarefas 
-
-### Core
-
-- [x] Criar post
-- [x] Listar posts com paginação e filtros
-- [x] Deletar posts
-- [x] Buscar por ID
-- [x] Modelagem de entidades (Post ↔ Tag)
-- [x] Remover dependência de Entity → DTO em toda aplicação
-- [x] Listar tags com paginação
-- [x] Implementar SDK AWS
-- [x] Implementar integração com S3 (upload de imagens)
-- [x] Implementar springdoc-openapi na API
-- [x] Criar testes unitários
-- [ ] Implementar módulo de autenticação
-- [ ] Implementar módulo de usuário
-- [ ] Proteger rotas com token
-
----
-
-### Infra
-
-- [x] Configurar S3
-- [x] Configurar Route 53
-- [ ] Configurar RDS
-- [ ] Configurar EC2
-- [x] Implementar CI/CD (build, testes, segurança, deploy)
 
 ---
 
