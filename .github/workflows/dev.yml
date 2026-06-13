@@ -1,14 +1,14 @@
-name: CI Production
+name: CI Dev
 
 on:
   push:
-    branches: [ main ]
+    branches: [ dev ]
   pull_request:
-    branches: [ main ]
+    branches: [ dev ]
     types: [ opened, synchronize, reopened ]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,5 +24,4 @@ jobs:
 
       - name: Docker Build
         run: docker build . -t the-moments:latest
-
 
