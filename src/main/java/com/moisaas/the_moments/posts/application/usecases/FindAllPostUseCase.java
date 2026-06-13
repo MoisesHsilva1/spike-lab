@@ -20,12 +20,10 @@ public class FindAllPostUseCase {
     public Page<PostDto> execute(FindAllPostDto params) {
         Pageable pageable = PageRequest.of(params.getOffset(), params.getLimit());
 
-        return fetchPosts(params, pageable).map(postMapper::toDto);
+        return fetchPosts(pageable).map(postMapper::toDto);
     }
 
-    private Page<PostEntity> fetchPosts(FindAllPostDto params, Pageable pageable) {
-        return (params.getStars() != null)
-                ? postsRepository.findAllByStars(params.getStars(), pageable)
-                : postsRepository.findAll(pageable);
+    private Page<PostEntity> fetchPosts(Pageable pageable) {
+        return postsRepository.findAll(pageable);
     }
 }

@@ -12,5 +12,4 @@ import lombok.NoArgsConstructor;
 public class FindAllPostDto {
     private Integer offset = 0;
     private Integer limit = 10;
-    private Double stars;
 }
