@@ -1,8 +1,8 @@
-package com.moisaas.the_moments.posts.application.mapper;
+package com.moisaas.spike_lab.posts.application.mapper;
 
-import com.moisaas.the_moments.posts.application.dtos.CreatePostDto;
-import com.moisaas.the_moments.posts.application.dtos.PostDto;
-import com.moisaas.the_moments.posts.domain.entities.PostEntity;
+import com.moisaas.spike_lab.posts.application.dtos.CreatePostDto;
+import com.moisaas.spike_lab.posts.application.dtos.PostDto;
+import com.moisaas.spike_lab.posts.domain.entities.PostEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

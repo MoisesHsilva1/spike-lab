@@ -1,4 +1,4 @@
-package com.moisaas.the_moments.shared.application.dtos;
+package com.moisaas.spike_lab.shared.application.dtos;
 
 import org.springframework.data.domain.Page;
 

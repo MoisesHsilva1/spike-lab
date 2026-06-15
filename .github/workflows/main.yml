@@ -24,5 +24,3 @@ jobs:
 
       - name: Docker Build
         run: docker build . -t the-moments:latest
-
-

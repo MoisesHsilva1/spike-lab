@@ -1,5 +1,4 @@
-package com.moisaas.the_moments.posts.domain.entities;
-
+package com.moisaas.spike_lab.posts.domain.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

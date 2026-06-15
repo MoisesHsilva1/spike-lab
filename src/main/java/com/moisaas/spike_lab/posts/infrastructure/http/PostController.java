@@ -1,11 +1,11 @@
-package com.moisaas.the_moments.posts.infrastructure.http;
+package com.moisaas.spike_lab.posts.infrastructure.http;
 
-import com.moisaas.the_moments.posts.application.dtos.CreatePostDto;
-import com.moisaas.the_moments.posts.application.dtos.FindAllPostDto;
-import com.moisaas.the_moments.posts.application.dtos.PostDto;
-import com.moisaas.the_moments.posts.application.usecases.CreatePostUseCase;
-import com.moisaas.the_moments.posts.application.usecases.FindAllPostUseCase;
-import com.moisaas.the_moments.shared.application.dtos.PaginationMultipleResponse;
+import com.moisaas.spike_lab.posts.application.dtos.CreatePostDto;
+import com.moisaas.spike_lab.posts.application.dtos.FindAllPostDto;
+import com.moisaas.spike_lab.posts.application.dtos.PostDto;
+import com.moisaas.spike_lab.posts.application.usecases.CreatePostUseCase;
+import com.moisaas.spike_lab.posts.application.usecases.FindAllPostUseCase;
+import com.moisaas.spike_lab.shared.application.dtos.PaginationMultipleResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

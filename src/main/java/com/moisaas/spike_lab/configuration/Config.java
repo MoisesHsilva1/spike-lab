@@ -1,4 +1,4 @@
-package com.moisaas.the_moments.configuration;
+package com.moisaas.spike_lab.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

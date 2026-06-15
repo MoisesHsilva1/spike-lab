@@ -1,12 +1,12 @@
 services:
   db:
     image: postgres:15
-    container_name: the-moments-db
+    container_name: spike-lab-db
     restart: always
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: moments_db
+      POSTGRES_DB: spike_db
     ports:
       - "5433:5432"
     volumes:

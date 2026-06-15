@@ -9,9 +9,9 @@
         <relativePath/>
     </parent>
     <groupId>com.moisaas</groupId>
-    <artifactId>the-moments</artifactId>
+    <artifactId>spike-lab</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>the-moments</name>
+    <name>spike-lab</name>
 
     <properties>
         <java.version>21</java.version>
