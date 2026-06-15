@@ -1,8 +1,10 @@
-# The Moments (Desenvolvimento)
+# SpikeLab
 
-# (v0)
+# SpikeLab 
 
-> **O The Moments é o ponto de partida para uma rede social focada em autonomia e personalização, mas que nesta v0 conecta apenas o essencial: um espaço 100% anônimo para quem quer compartilhar sentimentos, frases e poesias sem medo de se identificar, e para quem quer apenas ler pensamentos autênticos.**
+é um blog pessoal onde compartilho estudos, artigos, experimentos e aprendizados sobre engenharia de software e tecnologia.
+
+O objetivo é documentar conhecimento, registrar descobertas e compartilhar experiências adquiridas durante projetos, pesquisas e estudos contínuos.
 
 ---
 
